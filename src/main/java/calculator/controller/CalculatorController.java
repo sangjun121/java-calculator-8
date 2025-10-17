@@ -4,10 +4,13 @@ package calculator.controller;
 import calculator.view.InputView;
 
 public class CalculatorController {
-    public CalculatorController() {
+    private final InputView inputView;
+
+    public CalculatorController(InputView inputView) {
+        this.inputView = inputView;
     }
 
-    public void runCalculator() {
-        String input = InputView.getInput();
+    public void run() {
+        String input = inputView.getInput();
     }
 }
