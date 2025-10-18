@@ -1,9 +1,11 @@
 package calculator.util;
 
+import java.util.List;
+
 public class InputValidator {
     private static final String HEADER_PATTERN = "^//.{1}\n$";
+    private static final String DIGIT_PATTERN = "//d+";
     private static final int HEADER_LENGTH = 5;
-    private static final int HEADER_DELIMITER_INDEX = 5;
     private static final int DELIMITER_LENGTH = 1;
 
     private InputValidator() {
@@ -16,6 +18,12 @@ public class InputValidator {
     public static void validateHeader(String header) {
         validateHeaderFormat(header);
         validateHeaderLength(header);
+    }
+
+    public static void validateBody(String body, List<String> delimiters) {
+        for (int index = 0; index < body.length(); index++) {
+            validateBodyToken(body.substring(index, index + 1), delimiters);
+        }
     }
 
     public static void validateDelimiter(String delimiter) {
@@ -40,6 +48,12 @@ public class InputValidator {
 
     private static void validateNotDigitDelimiter(String delimiter) {
         if (!isDigit(delimiter.charAt(0))) return;
+        throw new IllegalArgumentException();
+    }
+
+    private static void validateBodyToken(String token, List<String> delimiters) {
+        if (delimiters.contains(token)) return;
+        if (isValidFormat(token, DIGIT_PATTERN)) return;
         throw new IllegalArgumentException();
     }
 

@@ -13,6 +13,14 @@ public class InputParser {
         return input.substring(0, HEADER_LENGTH);
     }
 
+    public static String getBody(String input, boolean hasHeader) {
+        if (hasHeader && input.length() == HEADER_LENGTH)
+            return "";
+        if (hasHeader)
+            return input.substring(HEADER_LENGTH);
+        return input;
+    }
+
     public static String getCustomDelimiter(String header) {
         return String.valueOf(header.charAt(HEADER_DELIMITER_INDEX));
     }

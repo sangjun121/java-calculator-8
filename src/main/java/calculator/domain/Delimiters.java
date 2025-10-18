@@ -17,6 +17,14 @@ public class Delimiters {
         this.delimiters = createDelimiters(customDelimiter);
     }
 
+    public List<String> getDelimitersByString() {
+        List<String> delimitersByString = new ArrayList<>();
+        for (Delimiter delimiter : delimiters) {
+            delimitersByString.add(delimiter.getDelimiter());
+        }
+        return delimitersByString;
+    }
+
     private List<Delimiter> createDelimiters() {
         List<Delimiter> delimiters = new ArrayList<>();
         delimiters.add(new Delimiter(COMMA));
