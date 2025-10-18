@@ -1,6 +1,7 @@
 package calculator.application;
 
 import calculator.domain.Delimiters;
+import calculator.domain.Numbers;
 import calculator.util.InputParser;
 import calculator.util.InputValidator;
 
@@ -18,6 +19,7 @@ public class CalculatorService {
          * 3. 추출된 숫자들을 기반으로 계산하여 반환
          */
         Delimiters delimiters = extractDelimitersFrom(input);
+        Numbers numbers = extractNumbers(input, delimiters);
     }
 
     private Delimiters extractDelimitersFrom(String input) {
@@ -32,12 +34,12 @@ public class CalculatorService {
         return new Delimiters();
     }
 
-    //TODO: 반환 값 수정
-    private void extractNumbers(String input, Delimiters delimiters) {
+    private Numbers extractNumbers(String input, Delimiters delimiters) {
         boolean hasHeader = InputValidator.hasHeader(input);
 
         String body = InputParser.getBody(input, hasHeader);
         InputValidator.validateBody(body, delimiters.getDelimitersByString());
         List<String> numbers = InputParser.getNumbers(body);
+        return new Numbers(numbers);
     }
 }
