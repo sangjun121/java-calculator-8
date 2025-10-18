@@ -2,6 +2,7 @@ package calculator.config;
 
 import calculator.application.CalculatorService;
 import calculator.controller.CalculatorController;
+import calculator.domain.Calculator;
 import calculator.view.InputView;
 
 public class AppConfig {
@@ -9,8 +10,12 @@ public class AppConfig {
         return new InputView();
     }
 
+    public Calculator calculator() {
+        return new Calculator();
+    }
+
     public CalculatorService calculatorService() {
-        return new CalculatorService();
+        return new CalculatorService(calculator());
     }
 
     public CalculatorController calculatorController() {
