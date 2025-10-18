@@ -3,8 +3,7 @@ package calculator.util;
 import java.util.List;
 
 public class InputValidator {
-    private static final String HEADER_PATTERN = "^//.{1}\n$";
-    private static final String DIGIT_PATTERN = "//d+";
+    private static final String DIGIT_PATTERN = "^[0-9]+$";
     private static final int HEADER_LENGTH = 5;
     private static final int DELIMITER_LENGTH = 1;
 
@@ -32,7 +31,7 @@ public class InputValidator {
     }
 
     private static void validateHeaderFormat(String header) {
-        if (isValidFormat(header, HEADER_PATTERN)) return;
+        if (header.startsWith("//") && header.endsWith("\\n")) return;
         throw new IllegalArgumentException();
     }
 
