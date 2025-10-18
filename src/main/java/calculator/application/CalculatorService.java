@@ -1,5 +1,6 @@
 package calculator.application;
 
+import calculator.util.InputParser;
 import calculator.util.InputValidator;
 
 public class CalculatorService {
@@ -18,5 +19,10 @@ public class CalculatorService {
     // TODO: 반환 값 수정
     private void extractDelimitersFrom(String input) {
         boolean hasHeader = InputValidator.hasHeader(input);
+
+        if (hasHeader) {
+            String header = InputParser.getHeader(input);
+            InputValidator.validateHeader(header);
+        }
     }
 }
