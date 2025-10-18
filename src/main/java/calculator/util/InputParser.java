@@ -8,7 +8,7 @@ public class InputParser {
     private static final int HEADER_LENGTH = 5;
     private static final int HEADER_DELIMITER_INDEX = 2;
     private static final int ZERO = 0;
-    private static final String NON_DIGIT_PATTERN = "[^0-9]+";
+    private static final String NON_DIGIT_DOT_PATTERN = "[^0-9.]+";
 
     private InputParser() {
     }
@@ -35,7 +35,7 @@ public class InputParser {
         if (body.length() == ZERO)
             return new ArrayList<>();
 
-        String[] numbers = body.split(NON_DIGIT_PATTERN);
+        String[] numbers = body.split(NON_DIGIT_DOT_PATTERN);
         return Arrays.asList(numbers);
     }
 }
