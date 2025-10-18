@@ -62,6 +62,7 @@ public class InputValidator {
 
     private static void validateBodyToken(String token, List<String> delimiters) {
         if (delimiters.contains(token)) return;
+        if (token.equals(DOT)) return;
         if (isValidFormat(token, DIGIT_PATTERN)) return;
         throw new InvalidInputException(Message.INVALID_TOKEN);
     }
