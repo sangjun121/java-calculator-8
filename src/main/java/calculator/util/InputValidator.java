@@ -4,6 +4,7 @@ public class InputValidator {
     private static final String HEADER_PATTERN = "^//.{1}\n$";
     private static final int HEADER_LENGTH = 5;
     private static final int HEADER_DELIMITER_INDEX = 5;
+    private static final int DELIMITER_LENGTH = 1;
 
     private InputValidator() {
     }
@@ -15,7 +16,11 @@ public class InputValidator {
     public static void validateHeader(String header) {
         validateHeaderFormat(header);
         validateHeaderLength(header);
-        validateCustomDelimiter(header);
+    }
+
+    public static void validateDelimiter(String delimiter) {
+        validateDelimiterLength(delimiter);
+        validateNotDigitDelimiter(delimiter);
     }
 
     private static void validateHeaderFormat(String header) {
@@ -28,8 +33,13 @@ public class InputValidator {
         throw new IllegalArgumentException();
     }
 
-    private static void validateCustomDelimiter(String header) {
-        if (!isDigit(header, HEADER_DELIMITER_INDEX)) return;
+    private static void validateDelimiterLength(String delimiter) {
+        if (isValidLength(delimiter, DELIMITER_LENGTH)) return;
+        throw new IllegalArgumentException();
+    }
+
+    private static void validateNotDigitDelimiter(String delimiter) {
+        if (!isDigit(delimiter.charAt(0))) return;
         throw new IllegalArgumentException();
     }
 
@@ -41,7 +51,7 @@ public class InputValidator {
         return string.length() == length;
     }
 
-    private static boolean isDigit(String string, int index) {
-        return Character.isDigit(string.charAt(index));
+    private static boolean isDigit(char character) {
+        return Character.isDigit(character);
     }
 }

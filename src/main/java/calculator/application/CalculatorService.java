@@ -1,5 +1,6 @@
 package calculator.application;
 
+import calculator.domain.Delimiters;
 import calculator.util.InputParser;
 import calculator.util.InputValidator;
 
@@ -16,13 +17,15 @@ public class CalculatorService {
          */
     }
 
-    // TODO: 반환 값 수정
-    private void extractDelimitersFrom(String input) {
+    private Delimiters extractDelimitersFrom(String input) {
         boolean hasHeader = InputValidator.hasHeader(input);
 
         if (hasHeader) {
             String header = InputParser.getHeader(input);
             InputValidator.validateHeader(header);
+            String customDelimiter = InputParser.getCustomDelimiter(header);
+            return new Delimiters(customDelimiter);
         }
+        return new Delimiters();
     }
 }
