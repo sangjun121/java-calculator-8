@@ -7,6 +7,7 @@ import java.util.List;
 
 public class InputValidator {
     private static final String DIGIT_PATTERN = "^[0-9]+$";
+    private static final String DOT = ".";
     private static final int HEADER_LENGTH = 5;
     private static final int DELIMITER_LENGTH = 1;
 
@@ -30,6 +31,7 @@ public class InputValidator {
 
     public static void validateDelimiter(String delimiter) {
         validateDelimiterLength(delimiter);
+        validateNotDotDelimiter(delimiter);
         validateNotDigitDelimiter(delimiter);
     }
 
@@ -46,6 +48,11 @@ public class InputValidator {
     private static void validateDelimiterLength(String delimiter) {
         if (isValidLength(delimiter, DELIMITER_LENGTH)) return;
         throw new InvalidInputException(Message.INVALID_DELIMITER_LENGTH);
+    }
+
+    private static void validateNotDotDelimiter(String delimiter) {
+        if (!delimiter.equals(DOT)) return;
+        throw new InvalidInputException(Message.DELIMITER_CANNOT_BE_DOT);
     }
 
     private static void validateNotDigitDelimiter(String delimiter) {
