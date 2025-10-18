@@ -1,5 +1,8 @@
 package calculator.util;
 
+import calculator.exception.InvalidInputException;
+import calculator.exception.Message;
+
 import java.util.List;
 
 public class InputValidator {
@@ -32,28 +35,28 @@ public class InputValidator {
 
     private static void validateHeaderFormat(String header) {
         if (header.startsWith("//") && header.endsWith("\\n")) return;
-        throw new IllegalArgumentException();
+        throw new InvalidInputException(Message.INVALID_HEADER_FORMAT);
     }
 
     private static void validateHeaderLength(String header) {
         if (isValidLength(header, HEADER_LENGTH)) return;
-        throw new IllegalArgumentException();
+        throw new InvalidInputException(Message.INVALID_HEADER_LENGTH);
     }
 
     private static void validateDelimiterLength(String delimiter) {
         if (isValidLength(delimiter, DELIMITER_LENGTH)) return;
-        throw new IllegalArgumentException();
+        throw new InvalidInputException(Message.INVALID_DELIMITER_LENGTH);
     }
 
     private static void validateNotDigitDelimiter(String delimiter) {
         if (!isDigit(delimiter.charAt(0))) return;
-        throw new IllegalArgumentException();
+        throw new InvalidInputException(Message.DELIMITER_CANNOT_BE_NUMBER);
     }
 
     private static void validateBodyToken(String token, List<String> delimiters) {
         if (delimiters.contains(token)) return;
         if (isValidFormat(token, DIGIT_PATTERN)) return;
-        throw new IllegalArgumentException();
+        throw new InvalidInputException(Message.INVALID_TOKEN);
     }
 
     private static boolean isValidFormat(String string, String format) {

@@ -1,5 +1,8 @@
 package calculator.domain;
 
+import calculator.exception.InvalidNumberException;
+import calculator.exception.Message;
+
 public class Number {
     private static final int MIN_NUMBER = 1;
     private static final int MAX_NUMBER = Integer.MAX_VALUE;
@@ -22,7 +25,7 @@ public class Number {
         try {
             return Integer.parseInt(number);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException();
+            throw new InvalidNumberException(Message.INVALID_NUMBER_FORMAT);
         }
     }
 
@@ -32,6 +35,6 @@ public class Number {
 
     private void validateRange(int number, int min, int max) {
         if (min <= number && number <= max) return;
-        throw new IllegalArgumentException();
+        throw new InvalidNumberException(Message.INVALID_NUMBER_RANGE);
     }
 }
