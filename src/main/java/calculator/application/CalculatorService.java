@@ -4,6 +4,8 @@ import calculator.domain.Delimiters;
 import calculator.util.InputParser;
 import calculator.util.InputValidator;
 
+import java.util.List;
+
 public class CalculatorService {
     public CalculatorService() {
     }
@@ -36,5 +38,6 @@ public class CalculatorService {
 
         String body = InputParser.getBody(input, hasHeader);
         InputValidator.validateBody(body, delimiters.getDelimitersByString());
+        List<String> numbers = InputParser.getNumbers(body);
     }
 }

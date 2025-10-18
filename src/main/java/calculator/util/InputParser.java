@@ -1,8 +1,14 @@
 package calculator.util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class InputParser {
     private static final int HEADER_LENGTH = 5;
     private static final int HEADER_DELIMITER_INDEX = 2;
+    private static final int ZERO = 0;
+    private static final String NON_DIGIT_PATTERN = "[^0-9]+";
 
     private InputParser() {
     }
@@ -23,5 +29,13 @@ public class InputParser {
 
     public static String getCustomDelimiter(String header) {
         return String.valueOf(header.charAt(HEADER_DELIMITER_INDEX));
+    }
+
+    public static List<String> getNumbers(String body) {
+        if (body.length() == ZERO)
+            return new ArrayList<>();
+
+        String[] numbers = body.split(NON_DIGIT_PATTERN);
+        return Arrays.asList(numbers);
     }
 }
