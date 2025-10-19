@@ -2,6 +2,7 @@ package calculator.domain;
 
 import calculator.exception.InvalidNumberException;
 import calculator.exception.Message;
+import calculator.util.InputValidator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -35,59 +36,49 @@ public class Number {
     }
 
     private void validateNumber(String number) {
-        if (isNullOrBlank(number)) return;
+        if (InputValidator.isNullOrBlank(number)) return;
 
-        if (hasNotDot(number)) {
-            if (!isValidLength(number, MIN_PART_LENGTH, MAX_INTEGER_DIGITS))
-                throw new InvalidNumberException(Message.INVALID_INTEGER_LENGTH);
-            if (number.equals(ZERO))
-                throw new InvalidNumberException(Message.NUMBER_CANNOT_BE_ZERO);
+        if (InputValidator.hasNotDot(number)) {
+            validateIntegerPartLength(number);
+            validateIntegerNotZero(number);
             return;
         }
 
-        if (hasSingleDot(number)) {
+        if (InputValidator.hasSingleDot(number)) {
             String[] parts = number.split("\\.");
 
-            if (parts.length != 2 || parts[0].isEmpty() || parts[1].isEmpty())
-                throw new InvalidNumberException(Message.INVALID_DECIMAL_FORMAT);
-
-            if (!isValidLength(parts[0], MIN_PART_LENGTH, MAX_INTEGER_DIGITS))
-                throw new InvalidNumberException(Message.INVALID_INTEGER_LENGTH);
-
-            if (!isValidLength(parts[1], MIN_PART_LENGTH, MAX_DECIMAL_SCALE))
-                throw new InvalidNumberException(Message.INVALID_DECIMAL_SCALE);
-
-            if (isAllZero(parts[0]) && isAllZero(parts[1]))
-                throw new InvalidNumberException(Message.NUMBER_CANNOT_BE_ZERO);
-
+            validateDecimalFormat(parts);
+            validateIntegerPartLength(parts[0]);
+            validateDecimalPartLength(parts[1]);
+            validateDecimalNotZero(parts);
             return;
         }
 
         throw new InvalidNumberException(Message.INVALID_NUMBER_FORMAT);
     }
 
-    private boolean isNullOrBlank(String number) {
-        return number == null || number.isBlank();
+    private void validateIntegerPartLength(String integerPart) {
+        if (!InputValidator.isValidLengthRange(integerPart, MIN_PART_LENGTH, MAX_INTEGER_DIGITS))
+            throw new InvalidNumberException(Message.INVALID_INTEGER_LENGTH);
     }
 
-    private boolean hasNotDot(String number) {
-        return !number.contains(".");
+    private void validateDecimalPartLength(String decimalPart) {
+        if (!InputValidator.isValidLengthRange(decimalPart, MIN_PART_LENGTH, MAX_DECIMAL_SCALE))
+            throw new InvalidNumberException(Message.INVALID_DECIMAL_SCALE);
     }
 
-    private boolean hasSingleDot(String number) {
-        return number.chars()
-                .filter(token -> token == '.')
-                .count() == 1;
+    private void validateIntegerNotZero(String number) {
+        if (number.equals(ZERO))
+            throw new InvalidNumberException(Message.NUMBER_CANNOT_BE_ZERO);
     }
 
-    private boolean isValidLength(String number, int minLength, int maxLength) {
-        return minLength <= number.length() && number.length() <= maxLength;
+    private void validateDecimalNotZero(String[] parts) {
+        if (InputValidator.isAllZero(parts[0]) && InputValidator.isAllZero(parts[1]))
+            throw new InvalidNumberException(Message.NUMBER_CANNOT_BE_ZERO);
     }
 
-    private boolean isAllZero(String number) {
-        for (char token : number.toCharArray()) {
-            if (token != '0') return false;
-        }
-        return true;
+    private void validateDecimalFormat(String[] parts) {
+        if (parts.length != 2 || parts[0].isEmpty() || parts[1].isEmpty())
+            throw new InvalidNumberException(Message.INVALID_DECIMAL_FORMAT);
     }
 }

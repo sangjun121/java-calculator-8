@@ -42,8 +42,33 @@ public class InputValidator {
         return string.length() == length;
     }
 
+    public static boolean isValidLengthRange(String string, int minLength, int maxLength) {
+        return minLength <= string.length() && string.length() <= maxLength;
+    }
+
     public static boolean isDigit(char character) {
         return Character.isDigit(character);
+    }
+
+    public static boolean isNullOrBlank(String string) {
+        return string == null || string.isBlank();
+    }
+
+    public static boolean hasNotDot(String string) {
+        return !string.contains(".");
+    }
+
+    public static boolean hasSingleDot(String string) {
+        return string.chars()
+                .filter(token -> token == '.')
+                .count() == 1;
+    }
+
+    public static boolean isAllZero(String string) {
+        for (char token : string.toCharArray()) {
+            if (token != '0') return false;
+        }
+        return true;
     }
 
     /**
