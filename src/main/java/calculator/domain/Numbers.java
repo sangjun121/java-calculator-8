@@ -1,5 +1,6 @@
 package calculator.domain;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +11,12 @@ public class Numbers {
         this.numbers = toNumberList(rawNumbers);
     }
 
-    public List<Integer> toIntList() {
-        List<Integer> numbersByInt = new ArrayList<>();
+    public List<BigDecimal> toBigDecimalList() {
+        List<BigDecimal> numbersByBigDecimal = new ArrayList<>();
         for (Number number : numbers) {
-            numbersByInt.add(number.getNumber());
+            numbersByBigDecimal.add(number.getNumber());
         }
-        return numbersByInt;
+        return numbersByBigDecimal;
     }
 
     private List<Number> toNumberList(List<String> rawNumbers) {
