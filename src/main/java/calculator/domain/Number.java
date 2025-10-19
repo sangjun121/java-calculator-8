@@ -57,7 +57,7 @@ public class Number {
             if (!isValidLength(parts[1], MIN_PART_LENGTH, MAX_DECIMAL_SCALE))
                 throw new InvalidNumberException(Message.INVALID_DECIMAL_SCALE);
 
-            if (parts[0].equals(ZERO) && parts[1].equals(ZERO))
+            if (isAllZero(parts[0]) && isAllZero(parts[1]))
                 throw new InvalidNumberException(Message.NUMBER_CANNOT_BE_ZERO);
 
             return;
@@ -82,5 +82,12 @@ public class Number {
 
     private boolean isValidLength(String number, int minLength, int maxLength) {
         return minLength <= number.length() && number.length() <= maxLength;
+    }
+
+    private boolean isAllZero(String number) {
+        for (char token : number.toCharArray()) {
+            if (token != '0') return false;
+        }
+        return true;
     }
 }
