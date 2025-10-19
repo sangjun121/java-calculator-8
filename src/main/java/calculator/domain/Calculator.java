@@ -4,35 +4,50 @@ import calculator.exception.InvalidNumberException;
 import calculator.exception.Message;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 
 public class Calculator {
-    private static final int MAX_INTEGER_DIGITS = 10;
-    private static final int MAX_DECIMAL_SCALE = 6;
-
-    public Calculator() {
-    }
+    private static final int MAX_INTEGER_LENGTH = 10;
+    private static final int MAX_DECIMAL_LENGTH = 6;
+    private static final String DOT = "\\.";
+    private static final int INTEGER_PART_INDEX = 0;
+    private static final int DECIMAL_PART_INDEX = 1;
 
     public String sum(List<BigDecimal> numbers) {
-        BigDecimal sum = BigDecimal.ZERO;
+        BigDecimal result = BigDecimal.ZERO;
 
-        for(BigDecimal number : numbers) {
-            sum = sum.add(number);
+        for (BigDecimal number : numbers) {
+            result = result.add(number);
         }
 
-        validateResult(sum);
-        return sum.stripTrailingZeros().toPlainString();
+        String formattedResult = formatResult(result);
+        validateResult(formattedResult);
+
+        return formattedResult;
     }
 
-    private void validateResult(BigDecimal result) {
-        String resultToString = result.stripTrailingZeros().toPlainString();
-        String[] parts = resultToString.split("\\.");
+    private String formatResult(BigDecimal result) {
+        return result.stripTrailingZeros().toPlainString();
+    }
 
-        if(parts[0].length() > MAX_INTEGER_DIGITS)
+    private void validateResult(String result) {
+        String[] parts = result.split(DOT);
+
+        validateIntegerPart(parts[INTEGER_PART_INDEX]);
+        validateDecimalPart(parts);
+    }
+
+    private void validateIntegerPart(String integerPart) {
+        if (integerPart.length() > MAX_INTEGER_LENGTH) {
             throw new InvalidNumberException(Message.INVALID_INTEGER_LENGTH);
+        }
+    }
 
-        if(parts.length == 2 && parts[1].length() > MAX_DECIMAL_SCALE)
+    private void validateDecimalPart(String[] parts) {
+        boolean hasDecimalPart = parts.length == 2;
+
+        if (hasDecimalPart && parts[DECIMAL_PART_INDEX].length() > MAX_DECIMAL_LENGTH) {
             throw new InvalidNumberException(Message.INVALID_DECIMAL_SCALE);
+        }
     }
 }
