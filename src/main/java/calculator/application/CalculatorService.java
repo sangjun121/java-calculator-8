@@ -18,7 +18,7 @@ public class CalculatorService {
     public String calculateFrom(String input) {
         Delimiters delimiters = extractDelimitersFrom(input);
         Numbers numbers = extractNumbers(input, delimiters);
-        return calculator.sum(numbers.toIntList());
+        return calculator.sum(numbers.toBigDecimalList());
     }
 
     private Delimiters extractDelimitersFrom(String input) {
