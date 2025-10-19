@@ -45,6 +45,24 @@ class CalculatorServiceTest {
     }
 
     @Test
+    void 지정된_구분자가_연속으로_입력되어도_정상적인_입력으로_간주한다() {
+        String input = "1,,2";
+
+        String result = calculatorService.calculateFrom(input);
+
+        assertThat(result).isEqualTo("3");
+    }
+
+    @Test
+    void 지정된_구분자가_문자열의_맨_앞과_뒤에_입력되어도_정상적인_입력으로_간주한다() {
+        String input = ",1,2,";
+
+        String result = calculatorService.calculateFrom(input);
+
+        assertThat(result).isEqualTo("3");
+    }
+
+    @Test
     void 헤더_포멧이_슬래시_두개로_시작하지_않으면_바디로_인식하여_예외가_발생한다() {
         String input = "/;\\n1;2,3";
 
@@ -83,6 +101,15 @@ class CalculatorServiceTest {
     @Test
     void 바디_내부에_음수가_있을시_예외가_발생한다() {
         String input = "//;\\n-1;2;3";
+
+        assertThatThrownBy(() -> calculatorService.calculateFrom(input))
+                .isInstanceOf(InvalidInputException.class)
+                .hasMessage(Message.INVALID_TOKEN.getMessage());
+    }
+
+    @Test
+    void 바디_내부에_커스텀_지정자가_아닌_공백_문자가_있을_경우_예외가_발생한다() {
+        String input = "1, 2,3";
 
         assertThatThrownBy(() -> calculatorService.calculateFrom(input))
                 .isInstanceOf(InvalidInputException.class)
