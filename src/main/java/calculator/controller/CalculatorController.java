@@ -1,6 +1,5 @@
 package calculator.controller;
 
-
 import calculator.application.CalculatorService;
 import calculator.view.InputView;
 import calculator.view.OutputView;

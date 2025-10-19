@@ -13,7 +13,6 @@ public class Number {
     private static final int MIN_PART_LENGTH = 1;
     private static final String ZERO = "0";
 
-
     private final BigDecimal number;
 
     public Number(String number) {
