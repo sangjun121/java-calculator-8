@@ -9,11 +9,13 @@ public class InputValidator {
     private static final String DIGIT_PATTERN = "^[0-9]+$";
     private static final String DOT = ".";
     private static final int HEADER_LENGTH = 5;
-    private static final int DELIMITER_LENGTH = 1;
 
     private InputValidator() {
     }
 
+    /**
+     * Input 문자열 검증 로직
+     */
     public static boolean hasHeader(String input) {
         return input.startsWith("//");
     }
@@ -29,12 +31,24 @@ public class InputValidator {
         }
     }
 
-    public static void validateDelimiter(String delimiter) {
-        validateDelimiterLength(delimiter);
-        validateNotDotDelimiter(delimiter);
-        validateNotDigitDelimiter(delimiter);
+    /**
+     * public 유틸 메소드
+     */
+    public static boolean isValidFormat(String string, String format) {
+        return string.matches(format);
     }
 
+    public static boolean isValidLength(String string, int length) {
+        return string.length() == length;
+    }
+
+    public static boolean isDigit(char character) {
+        return Character.isDigit(character);
+    }
+
+    /**
+     * private 메소드
+     */
     private static void validateHeaderFormat(String header) {
         if (header.startsWith("//") && header.endsWith("\\n")) return;
         throw new InvalidInputException(Message.INVALID_HEADER_FORMAT);
@@ -45,37 +59,10 @@ public class InputValidator {
         throw new InvalidInputException(Message.INVALID_HEADER_LENGTH);
     }
 
-    private static void validateDelimiterLength(String delimiter) {
-        if (isValidLength(delimiter, DELIMITER_LENGTH)) return;
-        throw new InvalidInputException(Message.INVALID_DELIMITER_LENGTH);
-    }
-
-    private static void validateNotDotDelimiter(String delimiter) {
-        if (!delimiter.equals(DOT)) return;
-        throw new InvalidInputException(Message.DELIMITER_CANNOT_BE_DOT);
-    }
-
-    private static void validateNotDigitDelimiter(String delimiter) {
-        if (!isDigit(delimiter.charAt(0))) return;
-        throw new InvalidInputException(Message.DELIMITER_CANNOT_BE_NUMBER);
-    }
-
     private static void validateBodyToken(String token, List<String> delimiters) {
         if (delimiters.contains(token)) return;
         if (token.equals(DOT)) return;
         if (isValidFormat(token, DIGIT_PATTERN)) return;
         throw new InvalidInputException(Message.INVALID_TOKEN);
-    }
-
-    private static boolean isValidFormat(String string, String format) {
-        return string.matches(format);
-    }
-
-    private static boolean isValidLength(String string, int length) {
-        return string.length() == length;
-    }
-
-    private static boolean isDigit(char character) {
-        return Character.isDigit(character);
     }
 }
