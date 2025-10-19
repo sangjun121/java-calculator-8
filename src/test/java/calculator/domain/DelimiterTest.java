@@ -1,6 +1,6 @@
 package calculator.domain;
 
-import calculator.exception.InvalidInputException;
+import calculator.exception.InvalidDelimiterException;
 import calculator.exception.Message;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +34,7 @@ class DelimiterTest {
         String inputDelimiter = ";;";
 
         assertThatThrownBy(() -> new Delimiter(inputDelimiter))
-                .isInstanceOf(InvalidInputException.class)
+                .isInstanceOf(InvalidDelimiterException.class)
                 .hasMessage(Message.INVALID_DELIMITER_LENGTH.getMessage());
     }
 
@@ -43,7 +43,7 @@ class DelimiterTest {
         String inputDelimiter = "";
 
         assertThatThrownBy(() -> new Delimiter(inputDelimiter))
-                .isInstanceOf(InvalidInputException.class)
+                .isInstanceOf(InvalidDelimiterException.class)
                 .hasMessage(Message.INVALID_DELIMITER_LENGTH.getMessage());
     }
 
@@ -52,7 +52,7 @@ class DelimiterTest {
         String inputDelimiter = "9";
 
         assertThatThrownBy(() -> new Delimiter(inputDelimiter))
-                .isInstanceOf(InvalidInputException.class)
+                .isInstanceOf(InvalidDelimiterException.class)
                 .hasMessage(Message.DELIMITER_CANNOT_BE_NUMBER.getMessage());
     }
 
@@ -61,7 +61,7 @@ class DelimiterTest {
         String inputDelimiter = ".";
 
         assertThatThrownBy(() -> new Delimiter(inputDelimiter))
-                .isInstanceOf(InvalidInputException.class)
+                .isInstanceOf(InvalidDelimiterException.class)
                 .hasMessage(Message.DELIMITER_CANNOT_BE_DOT.getMessage());
     }
 }

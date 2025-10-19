@@ -4,6 +4,7 @@ public enum Message {
     INVALID_INPUT("유효하지 않은 입력입니다."),
     INVALID_HEADER_FORMAT("올바르지 않은 헤더 포멧입니다."),
     INVALID_HEADER_LENGTH("올바르지 않은 헤더 길이입니다. 헤더 길이는 반드시 5자여야 합니다."),
+    INVALID_DELIMITER("올바르지 않은 구분자입니다."),
     INVALID_DELIMITER_LENGTH("올바르지 않은 구분자 길이입니다. 구분자 길이는 반드시 1자여야 합니다."),
     DELIMITER_CANNOT_BE_NUMBER("구분자는 숫자일 수 없습니다."),
     DELIMITER_CANNOT_BE_DOT("구분자는 소수점(.)일 수 없습니다."),
