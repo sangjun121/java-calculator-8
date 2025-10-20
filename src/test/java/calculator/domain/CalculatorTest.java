@@ -1,6 +1,5 @@
 package calculator.domain;
 
-import calculator.exception.InvalidInputException;
 import calculator.exception.InvalidNumberException;
 import calculator.exception.Message;
 import org.junit.jupiter.api.BeforeEach;
